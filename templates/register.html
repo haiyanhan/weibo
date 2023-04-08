@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="/static/register.css">
+</head>
+<body>
+{#    <div id="tip1" class="alert alert-primary alert-dismissible fade" role="alert">#}
+{#        <strong>成功!</strong> 绑定成功.#}
+{#    </div>#}
+{#    <div id="tip2" class="alert alert-warning alert-dismissible fade" role="alert">#}
+{#        <strong>失败!</strong> 绑定失败.#}
+{#    </div>#}
+
+<h1 class="a">注册</h1>
+<form action="/register" method="POST" class="middle">
+    <p><input type="text" name="username" placeholder="输入用户名"></p>
+    <p><input type="password" name="password" placeholder="输入密码"></p>
+    <p><input type="password" name="repassword" placeholder="确认密码"></p>
+    <p><input type="submit" value="注册"></p>
+</form>
+
+<form action="/" method="POST">
+    <p class="b"><input type="submit" value="返回首页" color="grey"></p>
+</form>
+
+</body>
+</html>

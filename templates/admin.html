@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>微博数据</title>
+    <!-- <script src="{{ url_for('static', filename='admin.js') }}"></script> -->
+    <script src="/static/admin.js"></script>
+</head>
+<body>
+    <h1>管理</h1>
+    <div>
+        <button id="add-btn">新增</button>
+        <button id="edit-btn">修改</button>
+        <button id="delete-btn">删除</button>
+        <input type="text" id="query-input">
+        <button id="query-btn">查询</button>
+      </div>
+    <table border="5" id="data-container" >
+        <tr>
+            <th>ID</th>
+            <th>用户名称</th>
+            <th>微博等级</th>
+            <th>微博内容</th>
+            <th>微博转发</th>
+            <th>微博评论</th>
+            <th>微博点赞</th>
+            <th>发布时间</th>
+            <th>关键词</th>
+            <th>话题</th>
+            <th>讨论</th>
+            <th>阅读</th>
+        </tr>    
+        {% for row in data %}
+        <tr>
+            <td>{{ row.rid}}</td>
+            <!-- <td>{{ row['rid'] }}</td> -->
+            <td>{{ row['用户名称'] }}</td>
+            <td>{{ row['微博等级'] }}</td>
+            <td>{{ row['微博内容'] }}</td>
+            <td>{{ row['微博转发量'] }}</td>
+            <td>{{ row['微博评论量'] }}</td>
+            <td>{{ row['微博点赞'] }}</td>
+            <td>{{ row['发布时间'] }}</td>
+            <td>{{ row['搜索关键词'] }}</td>
+            <td>{{ row['话题名称'] }}</td>
+            <td>{{ row['话题讨论数'] }}</td>
+            <td>{{ row['话题阅读数'] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
+    <!-- {% for row in data %}
+        <tr>
+            <td>{{ row[0] }}</td>
+            <td>{{ row[1] }}</td>
+            <td>{{ row[2] }}</td>
+            <td>{{ row[3] }}</td>
+            <td>{{ row[4] }}</td>
+            <td>{{ row[5] }}</td>
+            <td>{{ row[6] }}</td>
+            <td>{{ row[7] }}</td>
+            <td>{{ row[8] }}</td>
+            <td>{{ row[9] }}</td>
+            <td>{{ row[10] }}</td>
+            <td>{{ row[11] }}</td>
+        </tr>
+        {% endfor %} -->
+              <!-- <table border="5" id="data-container" > -->
+        <!-- ... table headers and data rows ... -->
+      <!-- </table>ccccc -->

@@ -1,0 +1,32 @@
+*{
+	padding: 0;
+	margin: 0;
+	border: none;
+}
+.list{                
+	width:500px;
+	height:280px;
+	background:url(bg.png) no-repeat;
+	margin:50px auto;
+	padding-top:70px;
+}
+/* 图片放在static文件夹才有用，或者css和图片放一起才有用 */
+input{
+	width:290 px;
+	height:34px ;
+	color: white;
+	background-color: black;
+	display: block;
+	margin:25px auto;
+	border: solid 2px grey;
+	padding-left: 10px;
+}
+.btn{
+	width:302px ;
+	height:34px ;
+	color:white ;
+	background-color:black ;
+	border:none ;
+	font-family:"宋体" ;
+
+}

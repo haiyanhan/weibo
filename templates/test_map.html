@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Awesome-pyecharts</title>
+            <script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts.min.js"></script>
+        <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/world.js"></script>
+
+</head>
+<body>
+    <div id="afb5835e92bd447b83640b29dda1e0a1" class="chart-container" style="width:900px; height:500px;"></div>
+    <!-- align-items: center;
+    vertical-align: center; 垂直居中-->
+    <script>
+        var chart_afb5835e92bd447b83640b29dda1e0a1 = echarts.init(
+            document.getElementById('afb5835e92bd447b83640b29dda1e0a1'), 'dark', {renderer: 'canvas'});
+        var option_afb5835e92bd447b83640b29dda1e0a1 = {
+    "animation": true,
+    "animationThreshold": 2000,
+    "animationDuration": 1000,
+    "animationEasing": "cubicOut",
+    "animationDelay": 0,
+    "animationDurationUpdate": 300,
+    "animationEasingUpdate": "cubicOut",
+    "animationDelayUpdate": 0,
+    "series": [
+        {
+            "type": "map",
+            "label": {
+                "show": false,
+                "position": "top",
+                "margin": 8
+            },
+            "mapType": "world",
+            "data": [
+                {
+                    "name": "Afghanistan",
+                    "value": 187037
+                },
+                {
+                    "name": "Armenia",
+                    "value": 426799
+                },
+                {
+                    "name": "Azerbaijan",
+                    "value": 800478
+                },
+                {
+                    "name": "Bahrain",
+                    "value": 661570
+                },
+                {
+                    "name": "Bangladesh",
+                    "value": 2006646
+                },
+                {
+                    "name": "Bhutan",
+                    "value": 60530
+                },
+                {
+                    "name": "Brunei",
+                    "value": 211132
+                },
+                {
+                    "name": "Cambodia",
+                    "value": 136959
+                },
+                {
+                    "name": "China",
+                    "value": 230135
+                },
+                {
+                    "name": "Cyprus",
+                    "value": 562911
+                },
+                {
+                    "name": "Georgia",
+                    "value": 1698020
+                },
+                {
+                    "name": "Hong Kong",
+                    "value": 1371938
+                },
+                {
+                    "name": "India",
+                    "value": 44107588
+                },
+                {
+                    "name": "Indonesia",
+                    "value": 6229315
+                },
+                {
+                    "name": "Iran",
+                    "value": 7426030
+                },
+                {
+                    "name": "Iraq",
+                    "value": 2449440
+                },
+                {
+                    "name": "Israel",
+                    "value": 4594568
+                },
+                {
+                    "name": "Japan",
+                    "value": 13598290
+                },
+                {
+                    "name": "Jordan",
+                    "value": 1715296
+                },
+                {
+                    "name": "Kazakhstan",
+                    "value": 1362647
+                },
+                {
+                    "name": "Kuwait",
+                    "value": 653730
+                },
+                {
+                    "name": "Kyrgyzstan",
+                    "value": 201329
+                },
+                {
+                    "name": "Lebanon",
+                    "value": 1181614
+                },
+                {
+                    "name": "Malaysia",
+                    "value": 4697213
+                },
+                {
+                    "name": "Maldives",
+                    "value": 184485
+                },
+                {
+                    "name": "Myanmar",
+                    "value": 614158
+                },
+                {
+                    "name": "Nepal",
+                    "value": 988821
+                },
+                {
+                    "name": "Oman",
+                    "value": 395737
+                },
+                {
+                    "name": "Pakistan",
+                    "value": 1557984
+                },
+                {
+                    "name": "Palestine",
+                    "value": 598019
+                },
+                {
+                    "name": "Philippines",
+                    "value": 3790309
+                },
+                {
+                    "name": "Qatar",
+                    "value": 412137
+                },
+                {
+                    "name": "S. Korea",
+                    "value": 20273011
+                },
+                {
+                    "name": "Saudi Arabia",
+                    "value": 810583
+                },
+                {
+                    "name": "Singapore",
+                    "value": 1742874
+                },
+                {
+                    "name": "Sri Lanka",
+                    "value": 666232
+                },
+                {
+                    "name": "Syria",
+                    "value": 56453
+                },
+                {
+                    "name": "Taiwan",
+                    "value": 4696969
+                },
+                {
+                    "name": "Thailand",
+                    "value": 4600978
+                },
+                {
+                    "name": "Timor-Leste",
+                    "value": 22980
+                },
+                {
+                    "name": "Turkey",
+                    "value": 15889495
+                },
+                {
+                    "name": "UAE",
+                    "value": 996775
+                },
+                {
+                    "name": "Uzbekistan",
+                    "value": 243232
+                },
+                {
+                    "name": "Vietnam",
+                    "value": 11192043
+                },
+                {
+                    "name": "Yemen",
+                    "value": 11895
+                }
+            ],
+            "roam": true,
+            "aspectScale": 0.75,
+            "nameProperty": "name",
+            "selectedMode": false,
+            "zoom": 1,
+            "mapValueCalculation": "sum",
+            "showLegendSymbol": false,
+            "emphasis": {}
+        }
+    ],
+    "legend": [
+        {
+            "data": [
+                ""
+            ],
+            "selected": {
+                "": true
+            },
+            "show": false,
+            "padding": 5,
+            "itemGap": 10,
+            "itemWidth": 25,
+            "itemHeight": 14
+        }
+    ],
+    "tooltip": {
+        "show": true,
+        "trigger": "item",
+        "triggerOn": "mousemove|click",
+        "axisPointer": {
+            "type": "line"
+        },
+        "showContent": true,
+        "alwaysShowContent": false,
+        "showDelay": 0,
+        "hideDelay": 100,
+        "formatter": "{b}:{c}\u4eba",
+        "textStyle": {
+            "fontSize": 14
+        },
+        "borderWidth": 0,
+        "padding": 5
+    },
+    "title": [
+        {
+            "text": "\u4e9a\u6d32\u56fd\u5bb6\u6700\u65b0 Covid-19 \u65b0\u51a0\u75ab\u60c5\u6570\u636e",
+            "left": "center",
+            "top": "1%",
+            "padding": 5,
+            "itemGap": 10,
+            "textStyle": {
+                "fontFamily": "\u5b8b\u4f53",
+                "fontSize": "20"
+            }
+        }
+    ],
+    "visualMap": {
+        "show": true,
+        "type": "piecewise",
+        "min": 0,
+        "max": null,
+        "inRange": {
+            "color": [
+                "#50a3ba",
+                "#eac763",
+                "#d94e5d"
+            ]
+        },
+        "calculable": true,
+        "inverse": false,
+        "splitNumber": 5,
+        "orient": "vertical",
+        "left": "5%",
+        "right": "10%",
+        "showLabel": true,
+        "itemWidth": 20,
+        "itemHeight": 14,
+        "borderWidth": 0,
+        "pieces": [
+            {
+                "min": 500000
+            },
+            {
+                "min": 400000,
+                "max": 500000
+            },
+            {
+                "min": 300000,
+                "max": 400000
+            },
+            {
+                "min": 200000,
+                "max": 300000
+            },
+            {
+                "min": 100000,
+                "max": 200000
+            },
+            {
+                "min": 50000,
+                "max": 100000
+            },
+            {
+                "max": 50000
+            }
+        ]
+    }
+};
+        chart_afb5835e92bd447b83640b29dda1e0a1.setOption(option_afb5835e92bd447b83640b29dda1e0a1);
+    </script>
+</body>
+</html>

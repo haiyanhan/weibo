@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link rel="stylesheet" type="text/css" href="/static/index.css">
+</head>
+<body>
+  <h class="container">注销账号页面</h><br>
+  <a href="{{ url_for('delete_account') }}" onclick=
+"if(confirm('你确定注销账号嘛?')){event.preventDefault(); document.getElementById('delete-form').submit();}">注销账号</a>
+<form id="delete-form" method="POST" action="{{ url_for('delete_account') }}">
+  <input type="hidden" name="_method" value="DELETE">
+  <!-- {{ form.csrf_token }} -->
+</form>
+    <!-- <h class="container">注销账号</h><br>
+    <a href="{{ url_for('delete_account') }}" onclick=
+"return confirm('你确定注销账号嘛?')">注销账号</a> -->
+</body>
+</html>

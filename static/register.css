@@ -1,0 +1,365 @@
+/* *{
+	padding: 0;
+	margin: 0;
+	border: none;
+} */
+    /* margin: auto; =0 auto上下为0，左右自适应*/
+/* body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */
+/* body里middle内全部水平居中但注册、返回在middle类两边。middle则四个元素紧挨整体水平居中 */
+/* .middle{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */
+
+/* Set document background and font */
+body {
+    background-color: #f8f9fa;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  
+  /* Set form container styles */
+  .middle {
+    margin-top: 50px;
+    padding: 30px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+  }
+  
+  /* Set form header styles */
+  .a {
+    font-size: 36px;
+    margin-bottom: 40px;
+  }
+  
+  /* Set input styles */
+  input[type="text"], input[type="password"] {
+    margin-bottom: 25px;
+    padding: 15px;
+    border-radius: 3px;
+    border: none;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+  
+  /* Set button styles */
+  button[type="submit"] {
+    background-color: #007bff;
+    border: none;
+    color: #fff;
+    border-radius: 3px;
+    padding: 15px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    width: 100%;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #0069d9;
+  }
+  
+  /* Set responsive styles */
+  @media only screen and (max-width: 767px) {
+    .middle {
+      margin-top: 20px;
+    }
+    .a {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    input[type="text"], input[type="password"] {
+      padding: 10px;
+      font-size: 14px;
+    }
+    button[type="submit"] {
+      padding: 10px 15px;
+      font-size: 14px;
+    }
+  }
+
+/* Set document background and font */
+body {
+  background-color: #f8f9fa;
+  font-family: Arial, sans-serif;
+}
+
+/* Set form header styles */
+.a {
+  margin-top: 50px;
+  font-size: 36px;
+  text-align: center;
+}
+
+/* Set form styles */
+.middle {
+  margin: 50px auto;
+  max-width: 400px;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0,0,0,0.15);
+}
+
+/* Set input styles */
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+/* Set placeholder styles */
+::placeholder {
+  color: #bfbfbf;
+}
+
+/* Set submit button styles */
+input[type="submit"] {
+  width: 100%;
+  background-color: #007bff;
+  border: none;
+  border-radius: 3px;
+  padding: 15px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+input[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+/* Set responsive styles */
+@media only screen and (max-width: 767px) {
+  /* Reduce font size for smaller screens */
+  .a {
+    font-size: 24px;
+  }
+  input[type="text"],
+  input[type="password"] {
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  /* Change submit button padding */
+  input[type="submit"] {
+    padding: 10px;
+  }
+}
+/* 第2种 */
+/* Set document background and font */
+body {
+    background-color: #f8f9fa;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Set form header styles */
+  .a {
+    margin-top: 50px;
+    font-size: 36px;
+    text-align: center;
+  }
+  
+  /* Set form styles */
+  .middle {
+    margin: 50px auto;
+    max-width: 400px;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.15);
+  }
+  
+  /* Set input styles */
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+  }
+  
+  /* Set placeholder styles */
+  ::placeholder {
+    color: #bfbfbf;
+  }
+  
+  /* Set submit button styles */
+  input[type="submit"] {
+    width: 100%;
+    background-color: #007bff;
+    border: none;
+    border-radius: 3px;
+    padding: 15px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  input[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Set responsive styles */
+  @media only screen and (max-width: 767px) {
+    /* Reduce font size for smaller screens */
+    .a {
+      font-size: 24px;
+    }
+    input[type="text"],
+    input[type="password"] {
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    /* Change submit button padding */
+    input[type="submit"] {
+      padding: 10px;
+    }
+  }
+/* 第三种 */
+
+/* .a{ */
+    /* display: flex; */
+    /* align-items: center;
+    vertical-align: center; */
+/* 垂直居中 */
+
+    /* justify-content: center; */
+/* 水平居中，常用 */
+    /* text-align: center; */
+    /* 行内、类行inline / inline-block / inline-table / flex 元素实现居中 */
+    /* height: 100vh; Optional, to center the element vertically */
+  /* } */
+
+  /* .middle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 400px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px #ccc;
+  }
+  
+  .middle input[type="text"],
+  .middle input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .middle input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #0077cc;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .middle input[type="submit"]:hover {
+    background-color: #005fa3;
+  } */
+
+  /* .middle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 400px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px #ccc;
+  }
+  
+  .middle input[type="text"],
+  .middle input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .middle input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #0077cc;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .middle input[type="submit"]:hover {
+    background-color: #005fa3;
+  } */
+
+  /* .middle { */
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px #ccc;
+  }
+  
+  .middle input[type="text"],
+  .middle input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .middle input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #0077cc;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .middle input[type="submit"]:hover {
+    background-color: #005fa3;
+  } */
+
+/* #a{
+    justify-content: center;
+    align-items: center;
+} */
