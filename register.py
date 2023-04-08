@@ -364,24 +364,25 @@ def login():
         l_password = request.form.get("l_password")
         user = Users.query.filter_by(username=l_username).first()
         if user:
-            # if i['username'] != l_username:
+            # if i.username != l_username:
             #     return "用户名未注册"
-            if user['username'] == l_username and l_username == 'admin' and user['password'] == l_password:
+            if user.username == l_username and l_username == 'admin' and user.password == l_password:
                 # return "登录成功管理员页面"
                 print("admin")
                 return redirect('/houtai')
                 # return redirect('/admin')
-            elif user['username'] == l_username and user['password'] == l_password:
+            elif user.username == l_username and user.password == l_password:
                 # return "登录成功用户页面"
                 print("login")
                 # ？登录成功获取l_username
                 session['username'] = l_username
+                print(session.get('username'))
                 return redirect('/function')
                 # return redirect('/data')
             
                 # return render_template('weiboindex.html', data=data)    
                 # return render_template('http://127.0.0.1:5000 ')  #TemplateNotFound                             
-            if user['username'] == l_username and user['password'] != l_password:
+            if user.username == l_username and user.password != l_password:
                 return "密码输入错误"
             # print(i, len(users))
         return "用户名未注册"
@@ -443,10 +444,7 @@ def index0():
 @app.route('/show')
 def show():
     users = Users.query.all()
-    
-    json_str = json.dumps(users)  # 将python数据结构转换为JSON
-    print(json_str)
-    return users
+    return render_template("show_users.html", users=users)
 
 # 国内舆情
 @app.route('/guonei')

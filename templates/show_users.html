@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>微博数据</title>
+    <title>用户数据</title>
     <!-- <script src="{{ url_for('static', filename='index.js') }}"></script> -->
     <!-- <script src="/static/weiboindex.js"></script> -->
     <!-- <link rel="stylesheet" type="text/css" href="/static/form.css"> -->
@@ -12,8 +12,7 @@
     <p>Data: {{ data }}</p>
     <p>Rows: {% for row in data %}{{ row }}{% endfor %}</p> -->
 
-    <h1 style=" text-align: center;">用户</h1>
-    <input type="button" value="导出excel表" style="border: 0;color:rgb(55, 55, 225);height: 30px">
+    <h1 style=" text-align: center;">用户管理</h1>
     <!-- background: #d0d9ef; color: rgb(124, 187, 208);background: #d0d9ef;-->
     <table border="" id="data-container"  ">
         <!-- 直接color是字体颜色 style="border-color: ;-->
@@ -22,37 +21,13 @@
             <th>用户名</th>
             <th>密码</th>
         </tr>    
-        {% for row in user %}
+        {% for row in users %}
         <tr>
             <td>{{ row.id }}</td>
-            <td>{{ row['微博等级'] }}</td>
-            <td>{{ row['微博内容'] }}</td>
-            <td>{{ row['微博转发量'] }}</td>
-            <td>{{ row['微博评论量'] }}</td>
-            <td>{{ row['微博点赞'] }}</td>
-            <td>{{ row['发布时间'] }}</td>
-            <td>{{ row['搜索关键词'] }}</td>
-            <td>{{ row['话题名称'] }}</td>
-            <td>{{ row['话题讨论数'] }}</td>
-            <td>{{ row['话题阅读数'] }}</td>
+            <td>{{ row.username }}</td>
+            <td>{{ row.password }}</td>
         </tr>
         {% endfor %}
     </table>
 </body>
 </html>
-    <!-- {% for row in data %}
-        <tr>
-            <td>{{ row[0] }}</td>
-            <td>{{ row[1] }}</td>
-            <td>{{ row[2] }}</td>
-            <td>{{ row[3] }}</td>
-            <td>{{ row[4] }}</td>
-            <td>{{ row[5] }}</td>
-            <td>{{ row[6] }}</td>
-            <td>{{ row[7] }}</td>
-            <td>{{ row[8] }}</td>
-            <td>{{ row[9] }}</td>
-            <td>{{ row[10] }}</td>
-            <td>{{ row[11] }}</td>
-        </tr>
-        {% endfor %} -->
