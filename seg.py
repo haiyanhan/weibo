@@ -19,7 +19,7 @@ PUNCTUATIONS = [u'。',u'#', u'，', u'“', u'”', u'…', u'？', u'！', u'�
 # wj = ['mlxg','IG+rng','igbanlan','edg','uzi','teamwe','theshy','英雄联盟','jackeylove']
 cnt = Counter()
 # for file in wj:
-wj =['mlxg'];#列表可以有多个文件
+wj =['mlxg'];#列表可以有多个文件，mlxg文件
 for file in wj:
     data = pd.read_excel(file+'.xlsx',encoding='utf-8') 
     # 如一个文件前面四句可改为下面三

@@ -29,7 +29,8 @@ def isPostive(text):
 
 # 读取文件，注意修改文件路径
 # file_path = 'mlxg.xls'
-file_path = 'test.xls'
+# file_path = 'test.xls'
+file_path = 'table.xls'
 data = pd.read_excel(file_path,encoding='utf-8')
 
 moods = []

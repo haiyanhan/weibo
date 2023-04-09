@@ -1,21 +1,44 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <title>微博数据</title>
     <!-- <script src="{{ url_for('static', filename='admin.js') }}"></script> -->
     <script src="/static/admin.js"></script>
+    <!-- <script>
+		function myFunction() {
+			var query = document.getElementById('query-input').value; // Get the query from the input field
+			var url = 'https://myserver.com/query?query=' + encodeURIComponent(query); // construct the URL to the server script with the query parameter
+			fetch(url) // send a request to the server script with the query parameter
+				.then(response => response.text()) // get the response text from the server
+				.then(data => {
+					document.getElementById('results').innerText = data; // display the data returned by the server in the results section
+				})
+				.catch(error => {
+					console.error('Error:', error);
+				});
+		}
+	</script> -->
 </head>
+
 <body>
     <h1>管理</h1>
     <div>
         <button id="add-btn">新增</button>
         <button id="edit-btn">修改</button>
         <button id="delete-btn">删除</button>
+        <form method="get" action="{{ url_for('admin') }}">
+            <p>Enter your search query:</p>
+            <input type="text" name="query">
+            <input type="submit" value="Search">
+        </form>
+        <!-- <h2>Enter your query:</h2>
         <input type="text" id="query-input">
-        <button id="query-btn">查询</button>
-      </div>
-    <table border="5" id="data-container" >
+        <button id="query-btn" onclick="myFunction()">Query</button>
+        <div id="results"></div> -->
+    </div>
+    <table border="2" id="data-container">
         <tr>
             <th>ID</th>
             <th>用户名称</th>
@@ -29,7 +52,7 @@
             <th>话题</th>
             <th>讨论</th>
             <th>阅读</th>
-        </tr>    
+        </tr>
         {% for row in data %}
         <tr>
             <td>{{ row.rid}}</td>
@@ -47,10 +70,31 @@
             <td>{{ row['话题阅读数'] }}</td>
         </tr>
         {% endfor %}
+        {% if total_pages > 1 %}
+        <div class="pagination">
+            {% if page > 1 %}
+            <a href="{{ url_for('admin', page=page-1) }}">上一页</a>
+            {% endif %}
+            {% for p in range(1, total_pages + 1) %}
+            {% if p == page %}
+            <a class="active" href="?page={{ p }}">{{ p }}</a>
+            {% else %}
+            <a href="{{ url_for('admin', page=p) }}">{{ p }}</a>
+            {% endif %}
+            {% endfor %}
+            {% if page < total_pages %} <a href="{{ url_for('admin', page=page+1) }}">下一页</a>
+                {% endif %}
+        </div>
+        {% endif %}
+        Total Pages: {{ total_pages }}
+        Current Page: {{ page }}
+        Start: {{ start }}
+        End: {{ end }}
     </table>
 </body>
+
 </html>
-    <!-- {% for row in data %}
+<!-- {% for row in data %}
         <tr>
             <td>{{ row[0] }}</td>
             <td>{{ row[1] }}</td>
@@ -66,6 +110,6 @@
             <td>{{ row[11] }}</td>
         </tr>
         {% endfor %} -->
-              <!-- <table border="5" id="data-container" > -->
-        <!-- ... table headers and data rows ... -->
-      <!-- </table>ccccc -->
+<!-- <table border="5" id="data-container" > -->
+<!-- ... table headers and data rows ... -->
+<!-- </table>ccccc -->

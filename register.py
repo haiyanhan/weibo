@@ -1,4 +1,6 @@
 import json
+import os
+from flask import send_file
 import secrets
 from flask import Flask, render_template, request, jsonify
 from flask_mysqldb import MySQL
@@ -25,7 +27,8 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, EqualTo
 from werkzeug.security import generate_password_hash, check_password_hash
-
+import subprocess
+from subprocess import run
 # 改密
 # from flask_wtf import FlaskForm
 # from wtforms import StringField, PasswordField, SubmitField
@@ -439,32 +442,81 @@ def data():
     total_pages = (len(data) + per_page - 1) // per_page
     start = (page - 1) * per_page
     end = start + per_page
-    # total_pages = (len(data) + per_page - 1+4) // per_page
-    # start = (page - 1) * per_page+1
-    # end = start + per_page+1
-    # total_pages = (len(data)/4) // per_page
-    # start = 1
-    # end =  (len(data)/4)
-    # 对数据进行分页处理
     data = data[start:end]
     return render_template('weiboindex.html', data=data, total_pages=total_pages, page=page)
 
+
+@app.route('/download')
+def download():
+    # 读取excel文件
+    filename = 'table.xls'
+    filepath = os.path.join(app.root_path, filename)
+    return send_file(filepath, as_attachment=True)
+
+
+@app.route('/downloadfenxi')
+def downloadfenxi():
+    # 读取excel文件
+    filename = 'mlxg.xlsx'
+    filepath = os.path.join(app.root_path, filename)
+    return send_file(filepath, as_attachment=True)
+
+
+@app.route('/downloadfenci')
+def downloadfenci():
+    # 读取excel文件
+    filename = 'mlxg.txt'
+    filepath = os.path.join(app.root_path, filename)
+    return send_file(filepath, as_attachment=True)
+
+
+@app.route('/text_analysis')
+def text_analysis():
+    # 运行文本分析py文件
+    subprocess.call(['python', './analysis.py'])
+    return '文本分析已完成！'
+
+
+@app.route('/text_dug')
+def text_dug():
+    # 运行文本分析py文件
+    subprocess.call(['python', './super-topic-spyder.py'])
+    return '文本挖掘已完成！'
+
+
+@app.route('/text_fenci')
+def text_fenci():
+    # 运行文本分析py文件
+    subprocess.call(['python', './seg.py'])
+    return '文本分词已完成！'
+
+
 # 不需要app2，直接写在这
-
-
 @app.route('/admin')
 def admin():
+    query = request.args.get('query', '')
     print(conn)
     # 从数据库中读取数据
     cursor = conn.cursor()
-    cursor.execute('SELECT * FROM weibo')
+    if query:
+        cursor.execute("SELECT * FROM weibo WHERE 用户名称 LIKE %s OR 微博内容 LIKE %s",
+                       ('%' + query + '%', '%' + query + '%'))
+    else:
+        cursor.execute('SELECT * FROM weibo')
     data = cursor.fetchall()
     # print(data)
     # #  获取查询结果
     cursor.close()
     # # 将数据传递给前台模板
     # return data[0]
-    return render_template('admin.html', data=data)
+    page = int(request.args.get('page', 1))
+    # 计算分页所需的参数
+    per_page = 4
+    total_pages = (len(data) + per_page - 1) // per_page
+    start = (page - 1) * per_page
+    end = start + per_page
+    data = data[start:end]
+    return render_template('admin.html', data=data, total_pages=total_pages, page=page)
 
 
 app_bp = Blueprint('app', __name__)
