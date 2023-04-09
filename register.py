@@ -1,4 +1,5 @@
-import json,secrets
+import json
+import secrets
 from flask import Flask, render_template, request, jsonify
 from flask_mysqldb import MySQL
 from flask_login import logout_user
@@ -44,7 +45,7 @@ db = SQLAlchemy(app)
 # 区分大小写，且users位置也区分
 users = []
 
-# class Users(db.Model):   
+# class Users(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)
 #     username = db.Column(db.String(50), unique=True, nullable=False)
 #     password = db.Column(db.String(255), nullable=False)
@@ -52,19 +53,27 @@ users = []
 # 删除成功后随便在py文件敲几下重新加载了数据库，maybe清除cookie后要重新获取MySQL数据
 
 # ChangePasswordForm新版本要设置为返回bool
+
+
 class ChangePasswordForm(FlaskForm):
     password = PasswordField('当前密码', validators=[DataRequired()])
-    new_password = PasswordField('新密码', validators=[DataRequired(), EqualTo('repassword', message='新密码和确认密码不一致')])
+    new_password = PasswordField('新密码', validators=[
+                                 DataRequired(), EqualTo('repassword', message='新密码和确认密码不一致')])
     repassword = PasswordField('确认密码', validators=[DataRequired()])
     submit = SubmitField('改密码')
+
     def validate_on_submit(self) -> bool:
         return super().validate() and self.submit.data
+
+
 class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False)
+
     def set_password(self, password):
-        self.password = password # generate_password_hash(password)     
+        self.password = password  # generate_password_hash(password)
+
     def check_password(self, password):
         print("@@@", self.password, password)
         return self.password == password
@@ -75,6 +84,7 @@ class Users(db.Model):
 # # 添加密码校验方法
 # def check_password(self, password):
 #     return check_password_hash(self.password_hash, password)
+
 
 @app.route('/change_password', methods=['GET', 'POST'])
 def change_password():
@@ -97,7 +107,7 @@ def change_password():
             return redirect(url_for('change_password'))
         # 检查新密码和确认密码是否一致
         # if form.password.data != form.repassword.data:
-        print("2222" , form.new_password.data, form.repassword.data)
+        print("2222", form.new_password.data, form.repassword.data)
         if form.new_password.data != form.repassword.data:
             flash('新密码和确认密码不一致，请重新输入')
             print(2222222222222)
@@ -111,6 +121,8 @@ def change_password():
     return render_template('change_password.html', form=form)
 
 # 删除用户
+
+
 @app.route('/delete_account', methods=['GET', 'POST'])
 def delete_account():
     # 获取当前登录用户的用户名
@@ -148,7 +160,7 @@ def delete_account():
 #     flash('Your account has been deleted', 'success')
 #     # Redirect to the index page or any other page you choose
 #     return redirect(url_for('index'))
-#点击删除页按钮 删除不了
+# 点击删除页按钮 删除不了
 # def delete_account():
 #     if request.method == 'POST':
 #         # 获取要删除的用户id
@@ -291,12 +303,14 @@ def load_users():
     app.config['USERS'] = users
     # register.py['users'] = users
 
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     return render_template('index.html')
- 
+
 # 字典
 # users = [{'username': 'admin', 'password': 'asd123'}]  # https://blog.csdn.net/weixin_36380516/article/details/80008602
+
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -306,7 +320,7 @@ def register():
         repassword = request.form.get('repassword')
 
         # 判断有无重名
-            # 查询用户名为当前登录用户的记录
+        # 查询用户名为当前登录用户的记录
         user = Users.query.filter_by(username=username).first()
         if user:
             return '用户名已被注册'
@@ -354,12 +368,17 @@ def register():
 #     # return data[0]
 #     return render_template('weiboindex.html', data=data)
 
+
 @app.route('/function')
 def function():
     return render_template('function.html')
+
+
 @app.route('/houtai')
 def houtai():
     return render_template('houtai.html')
+
+
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method == 'POST':
@@ -382,22 +401,24 @@ def login():
                 print(session.get('username'))
                 return redirect('/function')
                 # return redirect('/data')
-            
-                # return render_template('weiboindex.html', data=data)    
-                # return render_template('http://127.0.0.1:5000 ')  #TemplateNotFound                             
+
+                # return render_template('weiboindex.html', data=data)
+                # return render_template('http://127.0.0.1:5000 ')  #TemplateNotFound
             if user.username == l_username and user.password != l_password:
                 return "密码输入错误"
             # print(i, len(users))
         return "用户名未注册"
     return render_template('login.html')
 
-conn = pymysql.connect(host='localhost',user='root',password='123456',database='topic',charset='utf8mb4',   
-    cursorclass=pymysql.cursors.DictCursor )
+
+conn = pymysql.connect(host='localhost', user='root', password='123456', database='topic', charset='utf8mb4',
+                       cursorclass=pymysql.cursors.DictCursor)
 # 检查连接是否成功
 if conn:
     print('数据库连接成功！')
 else:
     print('数据库连接失败！')
+
 
 @app.route('/data')
 def data():
@@ -426,9 +447,11 @@ def data():
     # end =  (len(data)/4)
     # 对数据进行分页处理
     data = data[start:end]
-    return render_template('weiboindex.html', data=data, total_pages=total_pages)
+    return render_template('weiboindex.html', data=data, total_pages=total_pages, page=page)
 
 # 不需要app2，直接写在这
+
+
 @app.route('/admin')
 def admin():
     print(conn)
@@ -443,7 +466,10 @@ def admin():
     # return data[0]
     return render_template('admin.html', data=data)
 
+
 app_bp = Blueprint('app', __name__)
+
+
 @app_bp.route('')
 # @app_bp.route('http://127.0.0.1:5000/')
 def index0():
@@ -459,25 +485,31 @@ def index0():
 #     return "This is app2 home page."
 # app.register_blueprint(blueprint2)
 
+
 @app.route('/show')
 def show():
     users = Users.query.all()
     return render_template("show_users.html", users=users)
 
 # 国内舆情
+
+
 @app.route('/guonei')
 # def hello_world():  # put application's code here
-def guonei(): 
+def guonei():
     return render_template("guonei.html")
 # 国外舆情
+
+
 @app.route('/test_map')
-def test_map(): 
+def test_map():
     return render_template("test_map.html")
 
 
 @app.route('/time')
 def getTime():
     return utils.get_time()
+
 
 @app.route('/queryHotTopicList')
 def queryHotTopicList():
@@ -491,12 +523,14 @@ def queryHotTopicList():
         negativeValues.append(item[2])
     return jsonify({"indicators": indicators, "positiveValues": positiveValues, "negativeValues": negativeValues})
 
+
 @app.route('/queryStaGender')
 def queryStaGender():
     datas = getDatas.querStaGender()
     data = datas[0]
     print(data)
     return jsonify({"maleNum": data[0], "femaleNum": data[1]})
+
 
 @app.route('/queryStaProvinceDistribute')
 def queryStaProvinceDistribute():
@@ -509,6 +543,7 @@ def queryStaProvinceDistribute():
         })
     return jsonify({"dataLists": dataLists})
 
+
 @app.route('/queryStaWordFrequency')
 def queryStaWordFrequency():
     data = getDatas.queryStaWordFrequency()
@@ -519,6 +554,7 @@ def queryStaWordFrequency():
             "value": item[1]
         })
     return jsonify({"dataLists": dataLists})
+
 
 @app.route('/queryTopWords')
 def queryTopWords():
@@ -532,6 +568,7 @@ def queryTopWords():
     wordNameList.reverse()
     return jsonify({"wordNameList": wordNameList, "wordNumList": wordNumList})
 
+
 @app.route('/queryStaNetizenAttention')
 def queryStaNetizenAttention():
     data = getDatas.queryStaNetizenAttention()
@@ -542,6 +579,7 @@ def queryStaNetizenAttention():
         attentionNumList.append(item[0])
     return jsonify({"stanaDateList": stanaDateList, "attentionNumList": attentionNumList})
 
+
 @app.route('/queryTopProvinceDistribute')
 def queryTopProvinceDistribute():
     data = getDatas.queryTopProvinceDistribute()
@@ -550,11 +588,11 @@ def queryTopProvinceDistribute():
     for item in data:
         provinceNameList.append(item[0])
         sentimentNumList.append(item[1])
-    return jsonify({"provinceNameList": provinceNameList, "sentimentNumList": sentimentNumList } )
+    return jsonify({"provinceNameList": provinceNameList, "sentimentNumList": sentimentNumList})
 
 # 不同app泻在同文件
-# CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5500"}})  
-# conn = pymysql.connect(host='localhost',user='root',password='123456',database='topic',charset='utf8mb4',   
+# CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5500"}})
+# conn = pymysql.connect(host='localhost',user='root',password='123456',database='topic',charset='utf8mb4',
 #     cursorclass=pymysql.cursors.DictCursor )
 # if conn:
 #     print('数据库连接成功！')
@@ -578,12 +616,13 @@ def queryTopProvinceDistribute():
 #     # resp.headers['Access-Control-Allow-Origin'] = '*'
 #     # return resp
 
+
 if __name__ == '__main__':
     # app.run(debug=True, port=8000,use_reloader=False)
     app.run(debug=True)
     # 用这个登录注册页面格式不居中了
     # app2.run(debug=True, port=5000,use_reloader=False)
-    
+
     # app.run(debug=True, port=8000,use_reloader=False)
 
     # if request.method == 'POST':
@@ -622,7 +661,7 @@ if __name__ == '__main__':
 
 #     def check_password(self, password):
 #         return check_password_hash(self.password_hash, password)
-    
+
 # 数据库改
 # cursor = mysql.connection.cursor()
 # cursor.execute('UPDATE users SET username = %s, password = %s WHERE id = %s', (username, password, user_id))

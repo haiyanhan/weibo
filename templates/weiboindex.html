@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <title>微博数据</title>
@@ -7,6 +8,7 @@
     <!-- <script src="/static/weiboindex.js"></script> -->
     <!-- <link rel="stylesheet" type="text/css" href="/static/form.css"> -->
 </head>
+
 <body style="background-color: gainsboro;">
     <!-- <h1>Debug Output</h1>
     <p>Data: {{ data }}</p>
@@ -17,8 +19,8 @@
     <button>进行文本分析 </button>
     <button>导出文本分析 </button>
     <button>导出文本分词 </button>
-    <table border="" id="data-container"  ">
-        <!-- 直接color是字体颜色 style="border-color: ;-->
+    <table border="" id="data-container" ">
+        <!-- 直接color是字体颜色 style=" border-color: ;-->
         <tr>
             <th>ID</th>
             <th>用户名称</th>
@@ -32,52 +34,44 @@
             <th>话题</th>
             <th>讨论</th>
             <th>阅读</th>
-        </tr> 
-
-<!-- {% set page = page if page is defined else 1 %}
-{% set per_page = 4 %}
-{% set total_pages = (data|length + per_page - 1) // per_page %}
-{% set start = (page - 1) * per_page %}
-{% set end = start + per_page %}
-{% for row in data[start:end] %} -->
-    <tr>
-        <td>{{ row.rid}}</td>
-        <td>{{ row['用户名称'] }}</td>
-        <td>{{ row['微博等级'] }}</td>
-        <td>{{ row['微博内容'] }}</td>
-        <td>{{ row['微博转发量'] }}</td>
-        <td>{{ row['微博评论量'] }}</td>
-        <td>{{ row['微博点赞'] }}</td>
-        <td>{{ row['发布时间'] }}</td>
-        <td>{{ row['搜索关键词'] }}</td>
-        <td>{{ row['话题名称'] }}</td>
-        <td>{{ row['话题讨论数'] }}</td>
-        <td>{{ row['话题阅读数'] }}</td>
-    </tr>
-{% endfor %}
-{% if total_pages > 1 %}
-    <div class="pagination">
-        {% if page > 1 %}
-            <a href="?page={{ page - 1 }}">上一页</a>
-        {% endif %}
-        {% for p in range(1, total_pages + 1) %}
-            {% if p == page %}
-                <a class="active" href="?page={{ p }}">{{ p }}</a>
-            {% else %}
-                <a href="?page={{ p }}">{{ p }}</a>
-            {% endif %}
+        </tr>
+        {% for row in data %}
+        <tr>
+            <td>{{ row.rid}}</td>
+            <td>{{ row['用户名称'] }}</td>
+            <td>{{ row['微博等级'] }}</td>
+            <td>{{ row['微博内容'] }}</td>
+            <td>{{ row['微博转发量'] }}</td>
+            <td>{{ row['微博评论量'] }}</td>
+            <td>{{ row['微博点赞'] }}</td>
+            <td>{{ row['发布时间'] }}</td>
+            <td>{{ row['搜索关键词'] }}</td>
+            <td>{{ row['话题名称'] }}</td>
+            <td>{{ row['话题讨论数'] }}</td>
+            <td>{{ row['话题阅读数'] }}</td>
+        </tr>
         {% endfor %}
-        {% if page < total_pages %}
-            <a href="?page={{ page + 1 }}">下一页</a>
-            <!-- <a href="{{ url_for('data', page=page+1) }}">下一页</a> -->
+
+        {% if total_pages > 1 %}
+        <div class="pagination">
+            {% if page > 1 %}
+            <a href="{{ url_for('data', page=page-1) }}">上一页</a>
+            {% endif %}
+            {% for p in range(1, total_pages + 1) %}
+            {% if p == page %}
+            <a class="active" href="?page={{ p }}">{{ p }}</a>
+            {% else %}
+            <a href="{{ url_for('data', page=p) }}">{{ p }}</a>
+            {% endif %}
+            {% endfor %}
+            {% if page < total_pages %} <a href="{{ url_for('data', page=page+1) }}">下一页</a>
+                {% endif %}
+        </div>
         {% endif %}
-    </div>
-{% endif %}
-<!-- 显示分页计算结果 -->
-Total Pages: {{ total_pages }}
-Current Page: {{ page }}
-Start: {{ start }}
-End: {{ end }}
+        Total Pages: {{ total_pages }}
+        Current Page: {{ page }}
+        Start: {{ start }}
+        End: {{ end }}
     </table>
 </body>
 
