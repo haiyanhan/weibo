@@ -304,9 +304,7 @@ def register():
         username = request.form.get("username")       # POST方式
         password = request.form.get("password")
         repassword = request.form.get('repassword')
-        # 连接数据库
-        cursor = mysql.connection.cursor()
-        
+
         # 判断有无重名
             # 查询用户名为当前登录用户的记录
         user = Users.query.filter_by(username=username).first()
@@ -325,8 +323,13 @@ def register():
             # cursor.execute('INSERT INTO users (username, password) VALUES (%s, %s)', (username, password))
             # mysql.connection.commit()
             # cursor.close()
-            db.session.add(Users(username, password))
-            return "注册成功"
+            user = Users()
+            user.username = username
+            user.password = password
+            db.session.add(user)
+            db.session.commit()
+            flash("注册成功")
+            return redirect(url_for('login'))
         return "俩次密码不一致，或未输入密码"
     return render_template('register.html')
 
@@ -408,7 +411,22 @@ def data():
     cursor.close()
     # # 将数据传递给前台模板
     # return data[0]
-    return render_template('weiboindex.html', data=data)
+    # 获取查询字符串中的page参数的值，默认为1
+    page = int(request.args.get('page', 1))
+    # 计算分页所需的参数
+    per_page = 4
+    total_pages = (len(data) + per_page - 1) // per_page
+    start = (page - 1) * per_page
+    end = start + per_page
+    # total_pages = (len(data) + per_page - 1+4) // per_page
+    # start = (page - 1) * per_page+1
+    # end = start + per_page+1
+    # total_pages = (len(data)/4) // per_page
+    # start = 1
+    # end =  (len(data)/4)
+    # 对数据进行分页处理
+    data = data[start:end]
+    return render_template('weiboindex.html', data=data, total_pages=total_pages)
 
 # 不需要app2，直接写在这
 @app.route('/admin')
