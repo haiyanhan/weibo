@@ -89,77 +89,6 @@ class Users(db.Model):
 #     return check_password_hash(self.password_hash, password)
 
 
-class Admin(Users):
-    # 获取所有用户
-    def get_all_users():
-        users = []
-        try:
-            # 查询所有用户
-            cursor = mydb.cursor()
-            cursor.execute("SELECT * FROM users")
-            result = cursor.fetchall()
-            # 将查询结果转换为用户对象列表
-            for row in result:
-                user = User(row[0], row[1], row[2])
-                users.append(user)
-        except Error as e:
-            print("Error reading data from MySQL table", e)
-        finally:
-            cursor.close()
-        return users
-    # 根据ID获取用户
-    def get_user_by_id(id):
-        try:
-            # 根据ID查询用户
-            cursor = mydb.cursor()
-            cursor.execute("SELECT * FROM users WHERE id = %s", (id,))
-            result = cursor.fetchone()
-            # 如果查询结果不为空，则返回用户对象
-            if result:
-                user = User(result[0], result[1], result[2])
-                return user
-        except Error as e:
-            print("Error reading data from MySQL table", e)
-        finally:
-            cursor.close()
-        return None
-    # 添加用户
-    def add_user(name, email):
-        try:
-            # 插入新用户
-            cursor = mydb.cursor()
-            cursor.execute("INSERT INTO users (name, email) VALUES (%s, %s)", (name, email))
-            mydb.commit()
-        except Error as e:
-            print("Error writing data to MySQL table", e)
-            mydb.rollback()
-        finally:
-            cursor.close()
-    # 更新用户
-    def update_user(id, name, email):
-        try:
-            # 更新用户信息
-            cursor = mydb.cursor()
-            cursor.execute("UPDATE users SET name = %s, email = %s WHERE id = %s", (name, email, id))
-            mydb.commit()
-        except Error as e:
-            print("Error writing data to MySQL table", e)
-            mydb.rollback()
-        finally:
-            cursor.close()
-    # 删除用户
-    def delete_user(id):
-        try:
-            # 删除用户
-            cursor = mydb.cursor()
-            cursor.execute("DELETE FROM users WHERE id = %s", (id,))
-            mydb.commit()
-        except Error as e:
-            print("Error writing data to MySQL table", e)
-            mydb.rollback()
-        finally:
-            cursor.close()
-
 @app.route('/change_password', methods=['GET', 'POST'])
 def change_password():
     # 获取当前登录用户的用户名
@@ -195,7 +124,6 @@ def change_password():
     return render_template('change_password.html', form=form)
 
 # 管理员改密
-
 # 管理员删除用户
 
 
