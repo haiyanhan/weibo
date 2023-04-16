@@ -89,6 +89,77 @@ class Users(db.Model):
 #     return check_password_hash(self.password_hash, password)
 
 
+class Admin(Users):
+    # 获取所有用户
+    def get_all_users():
+        users = []
+        try:
+            # 查询所有用户
+            cursor = mydb.cursor()
+            cursor.execute("SELECT * FROM users")
+            result = cursor.fetchall()
+            # 将查询结果转换为用户对象列表
+            for row in result:
+                user = User(row[0], row[1], row[2])
+                users.append(user)
+        except Error as e:
+            print("Error reading data from MySQL table", e)
+        finally:
+            cursor.close()
+        return users
+    # 根据ID获取用户
+    def get_user_by_id(id):
+        try:
+            # 根据ID查询用户
+            cursor = mydb.cursor()
+            cursor.execute("SELECT * FROM users WHERE id = %s", (id,))
+            result = cursor.fetchone()
+            # 如果查询结果不为空，则返回用户对象
+            if result:
+                user = User(result[0], result[1], result[2])
+                return user
+        except Error as e:
+            print("Error reading data from MySQL table", e)
+        finally:
+            cursor.close()
+        return None
+    # 添加用户
+    def add_user(name, email):
+        try:
+            # 插入新用户
+            cursor = mydb.cursor()
+            cursor.execute("INSERT INTO users (name, email) VALUES (%s, %s)", (name, email))
+            mydb.commit()
+        except Error as e:
+            print("Error writing data to MySQL table", e)
+            mydb.rollback()
+        finally:
+            cursor.close()
+    # 更新用户
+    def update_user(id, name, email):
+        try:
+            # 更新用户信息
+            cursor = mydb.cursor()
+            cursor.execute("UPDATE users SET name = %s, email = %s WHERE id = %s", (name, email, id))
+            mydb.commit()
+        except Error as e:
+            print("Error writing data to MySQL table", e)
+            mydb.rollback()
+        finally:
+            cursor.close()
+    # 删除用户
+    def delete_user(id):
+        try:
+            # 删除用户
+            cursor = mydb.cursor()
+            cursor.execute("DELETE FROM users WHERE id = %s", (id,))
+            mydb.commit()
+        except Error as e:
+            print("Error writing data to MySQL table", e)
+            mydb.rollback()
+        finally:
+            cursor.close()
+
 @app.route('/change_password', methods=['GET', 'POST'])
 def change_password():
     # 获取当前登录用户的用户名
@@ -123,9 +194,12 @@ def change_password():
         return redirect(url_for('index'))
     return render_template('change_password.html', form=form)
 
+# 管理员改密
+
+# 管理员删除用户
+
+
 # 删除用户
-
-
 @app.route('/delete_account', methods=['GET', 'POST'])
 def delete_account():
     # 获取当前登录用户的用户名
@@ -425,17 +499,19 @@ else:
 
 @app.route('/data')
 def data():
+    query = request.args.get('query', '')
     print(conn)
     # 从数据库中读取数据
     cursor = conn.cursor()
-    cursor.execute('SELECT * FROM weibo')
+    if query:
+        cursor.execute("SELECT * FROM weibo WHERE 用户名称 LIKE %s OR 微博内容 LIKE %s",
+                       ('%' + query + '%', '%' + query + '%'))
+    else:
+        cursor.execute('SELECT * FROM weibo')
     data = cursor.fetchall()
     # print(data)
     # #  获取查询结果
     cursor.close()
-    # # 将数据传递给前台模板
-    # return data[0]
-    # 获取查询字符串中的page参数的值，默认为1
     page = int(request.args.get('page', 1))
     # 计算分页所需的参数
     per_page = 4
@@ -537,26 +613,92 @@ def index0():
 #     return "This is app2 home page."
 # app.register_blueprint(blueprint2)
 
+# class Users(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     username = db.Column(db.String(50), unique=True, nullable=False)
+#     password = db.Column(db.String(255), nullable=False)
+# from models import db, Users
+# db.init_app(app)
 
+# ？实现用户名密码删除用户
 @app.route('/show')
 def show():
-    users = Users.query.all()
-    return render_template("show_users.html", users=users)
+    query = request.args.get('query', '')
+    # 正确查找，且正确分页
+    if query:
+        users = Users.query.filter(Users.username.like(f'%{query}%')).all()
+    else:
+        users = Users.query.all()
+    # 为分页计算所需的参数
+    per_page = 8
+    total_pages = (len(users) + per_page - 1) // per_page
+    page = int(request.args.get('page', 1))
+    start = (page - 1) * per_page
+    end = start + per_page
+    users = users[start:end]
+    return render_template("show_users.html", users=users, total_pages=total_pages, page=page)
+# 查询报错UnboundLocalError: local variable ‘data’ referenced before assignment
+# 这个错误出现的原因是分页代码中尝试引用了data变量，但是它在之前没有分配任何值。所以我们需要把分页代码放在正确的位置，以确保代码可靠。
+# 将分页代码移到数据检索后解决，具体来说，将分页代码放在检索到所有用户并将它们存储在users变量中之后即可。
+# data变量现在被替换为users变量，并且所有与用户筛选和存储数据相关的逻辑都移动到了代码的前面。
+
+    # 本来可以查询但分页后不能，有分页标签但点击只是显示所有
+    # if query:
+    #     users = Users.query.filter(Users.username.like(f'%{query}%')).all()                   
+    # else:
+    #     users = Users.query.all()
+    #       # 如果未过滤用户，将所有用户存储在 data 列表中以进行分页
+    #     data = users
+    # page = int(request.args.get('page', 1))
+    # # 计算分页所需的参数
+    # per_page = 4
+    # total_pages = (len(data) + per_page - 1) // per_page
+    # start = (page - 1) * per_page
+    # end = start + per_page
+    # data = data[start:end]
+    # return render_template("show_users.html", users=users, data=data, total_pages=total_pages, page=page)
+    # return render_template("show_users.html", users=users)
+
+# def show():
+#     query = request.args.get('query', '')
+#     print(conn)
+#     # 从数据库中读取数据
+#     cursor = conn.cursor()
+#     if query:
+#         cursor.execute("SELECT * FROM users WHERE username LIKE %s",('%' + query + '%'))                      
+#     else:
+#         cursor.execute('SELECT * FROM users')
+#         # users = Users.query.all()
+#     data = cursor.fetchall()
+#     # print(data)
+#     # #  获取查询结果
+#     cursor.close()
+# 分页
+    # page = int(request.args.get('page', 1))
+    # # 计算分页所需的参数
+    # per_page = 4
+    # total_pages = (len(data) + per_page - 1) // per_page
+    # start = (page - 1) * per_page
+    # end = start + per_page
+    # data = data[start:end]
+
+    # users = Users.query.all()
+    # return render_template("show_users.html", users=users,data=data)
 
 # 国内舆情
-
-
 @app.route('/guonei')
 # def hello_world():  # put application's code here
 def guonei():
     return render_template("guonei.html")
 # 国外舆情
-
-
 @app.route('/test_map')
 def test_map():
     return render_template("test_map.html")
-
+# 国内疫情
+@app.route('/guoneiyiqing')
+# def hello_world():  # put application's code here
+def guoneiyiqing():
+    return render_template("guoneiyiqing.html")
 
 @app.route('/time')
 def getTime():

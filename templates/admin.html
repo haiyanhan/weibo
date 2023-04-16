@@ -20,18 +20,25 @@
 				});
 		}
 	</script> -->
+    <style type="text/css">
+        input {
+            height: 40px;
+        }
+    </style>
 </head>
 
-<body>
-    <h1>管理</h1>
+<body style="background-color: gainsboro;">
+    <h1 style=" text-align: center;">管理</h1>
     <div>
-        <button id="add-btn">新增</button>
+        <!-- <button id="add-btn">新增</button>
         <button id="edit-btn">修改</button>
-        <button id="delete-btn">删除</button>
+        <button id="delete-btn">删除</button> -->
+        <br>
+        <br>
         <form method="get" action="{{ url_for('admin') }}">
-            <p>Enter your search query:</p>
-            <input type="text" name="query">
-            <input type="submit" value="Search">
+            <!-- <p>输入你要查找的关键词</p> -->
+            <input type="text" name="query" placeholder="输入你要查找的关键词">
+            <input type="submit" value="查找">
         </form>
         <!-- <h2>Enter your query:</h2>
         <input type="text" id="query-input">

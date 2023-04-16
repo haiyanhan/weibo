@@ -7,26 +7,34 @@
     <!-- <script src="{{ url_for('static', filename='index.js') }}"></script> -->
     <!-- <script src="/static/weiboindex.js"></script> -->
     <!-- <link rel="stylesheet" type="text/css" href="/static/form.css"> -->
+    <link rel="stylesheet" type="text/css" href="../static/css/data.css">
     </script>
     <style type="text/css">
-        button {
-            color: #000000;
+        input,button {
             height: 40px;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
         }
     </style>
 </head>
-
 <body style="background-color: gainsboro;">
     <!-- <h1>Debug Output</h1>
     <p>Data: {{ data }}</p>
     <p>Rows: {% for row in data %}{{ row }}{% endfor %}</p> -->
     <h1 style=" text-align: center;">微博舆情</h1>
+    <form method="get" action="{{ url_for('data') }}">
+        <input type="text" name="query" placeholder="输入你要查找的关键词">
+        <input type="submit" value="查找">
+    </form>
+    <br>
     <button  onclick="location.href='/text_dug'">挖掘新数据 </button>
     <button onclick="window.location.href='/download'">导出数据表 </button>
     <button  onclick="location.href='/text_analysis'">进行文本分析 </button>
     <button  onclick="window.location.href='/downloadfenxi'">导出文本分析 </button>
     <button  onclick="location.href='/text_fenci'">进行文本分词 </button>
     <button  onclick="window.location.href='/downloadfenci'">导出文本分词 </button>
+    <button  onclick="window.location.href='/function'">返回 </button>
     <table border="" id="data-container" ">
         <!-- 直接color是字体颜色 style=" border-color: ;-->
         <tr>

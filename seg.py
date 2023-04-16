@@ -16,10 +16,10 @@ STOPWORDS = [u'的',u' ',u'\n',u'他', u'地', u'得', u'而', u'了', u'在', u
 PUNCTUATIONS = [u'。',u'#', u'，', u'“', u'”', u'…', u'？', u'！', u'、', u'；', u'（', u'）']
 
 # 需要进行分词的文件
-# wj = ['mlxg','IG+rng','igbanlan','edg','uzi','teamwe','theshy','英雄联盟','jackeylove']
 cnt = Counter()
 # for file in wj:
-wj =['mlxg'];#列表可以有多个文件，mlxg文件
+# wj =['mlxg.xls'];#列表可以有多个文件，mlxg文件
+wj =['mlxg'];#列表可以有多个文件，mlxg.xlsx
 for file in wj:
     data = pd.read_excel(file+'.xlsx',encoding='utf-8') 
     # 如一个文件前面四句可改为下面三
@@ -33,7 +33,9 @@ for file in wj:
             if seg not in STOPWORDS and seg not in PUNCTUATIONS and seg not in wj:
                 cnt[seg] = cnt[seg] + 1
     # save_seg("seg_result/"+file+".txt",cnt) # 保存文件 jieba分析语句 先消极积极再分词词频=先analsis再seg
-    save_seg(file+".txt",cnt) # 保存文件 jieba分析语句 先消极积极再分词词频=先analsis再seg
+    save_seg(file+".txt",cnt) # 保存文件 jieba分析语句 先消极积极再分词词频=先analsis再seg分词
+    save_seg(file+".xls",cnt) # 保存文件 jieba分析语句 先消极积极再分词词频=先analsis再seg分词
+# 创建了两种格式
 
 # 遍历文件列表 wj 中的所有文件名 file；
 # 使用 Pandas 库的 read_excel() 函数读取指定文件名 file 对应的 Excel 文件，并将其转换为 DataFrame 格式的数据 data；
@@ -48,3 +50,4 @@ for file in wj:
 # 将打开一个以 utf-8 编码的文件句柄，就可以把所有 unicode 字符以 utf-8 编码写入文件中。
 # 将数据使用内置函数 str.encode() 将其转换成指定的编码格式。
 # 例如在 write() 函数中使用 str.encode('utf-8') 对字符串进行编码，将其转换为 UTF-8 编码，可以避免出现编码错误的问题。
+# wj = ['mlxg','IG+rng','igbanlan','edg','uzi','teamwe','theshy','英雄联盟','jackeylove']

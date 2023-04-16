@@ -6,15 +6,169 @@
     <!-- <script src="{{ url_for('static', filename='index.js') }}"></script> -->
     <!-- <script src="/static/weiboindex.js"></script> -->
     <!-- <link rel="stylesheet" type="text/css" href="/static/form.css"> -->
+    <style>
+        table {
+            font-family: Arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid grey;
+        }
+
+        th {
+            background-color: #4CAF50;
+            background-color: rgb(175, 170, 170);
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+    <!-- <script>
+        var addBtn = document.getElementById("add-btn");
+        addBtn.addEventListener("click", function() {
+        // 获取要新增的用户信息
+        var username = document.getElementById("username").value; // 姓名
+        var password = document.getElementById("password").value; // 年龄
+        // 发送HTTP请求
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "http://127.0.0.1:5000/show");
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                // 处理响应数据
+            } else {
+                console.error(xhr.statusText);
+            }
+        };
+        xhr.send(JSON.stringify({
+            "type": "add",
+            "user": {
+                // 要新增的用户信息
+                "username": username,
+                "password": password,
+            }
+        }));
+    });       
+    </script> -->
+    <!-- 根据用户名删除，要在每行数据后加个删除且按钮要和每行数据的用户名绑定 -->
+    <!-- <script>
+        var deleteBtn = document.getElementById("delete-btn");
+deleteBtn.addEventListener("click", function() {
+    // 弹出对话框
+    var username = prompt("请输入要删除的用户名：");
+    if (username !== null && username.trim() !== "") {
+        // 弹出确认对话框
+        var r = confirm("确定要删除用户名为\"" + username + "\"的用户吗？");
+        if (r === true) {
+            // 发送HTTP请求
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "http://127.0.0.1:5000/show");
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    // 处理响应数据
+                    console.log(xhr.responseText);
+                } else {
+                    console.error(xhr.statusText);
+                }
+            };
+            xhr.send(JSON.stringify({
+                "type": "delete",
+                "user": {
+                    "username": username
+                }
+            }));
+        }
+    }
+});
+    </script> -->
+    <script type="text/javascript">
+        function showDialog() {
+            // 创建对话框元素
+            var dialog = document.createElement('div');
+            dialog.classList.add('dialog');           
+            // 创建表单元素
+            var form = document.createElement('form');
+            form.onsubmit = function(event) {
+                event.preventDefault();
+                var username = document.getElementById('username').value;
+                var password = document.getElementById('password').value;
+                // 在这里发送数据到服务器并进行删除操作
+                alert('用户已删除：' + username);
+                dialog.remove();
+            };
+            dialog.appendChild(form);            
+            // 创建用户名输入框
+            var usernameInput = document.createElement('input');
+            usernameInput.type = 'text';
+            usernameInput.placeholder = '用户名';
+            usernameInput.id = 'username';
+            form.appendChild(usernameInput);            
+            // 创建密码输入框
+            var passwordInput = document.createElement('input');
+            passwordInput.type = 'password';
+            passwordInput.placeholder = '密码';
+            passwordInput.id = 'password';
+            form.appendChild(passwordInput);           
+            // 创建提交按钮
+            var submitButton = document.createElement('button');
+            submitButton.innerHTML = '删除';
+            submitButton.type = 'submit';
+            form.appendChild(submitButton);           
+            // 将对话框添加到页面中
+            document.body.appendChild(dialog);
+            form.onsubmit = function(event) {
+    event.preventDefault();
+    var username = document.getElementById('username').value;
+    var password = document.getElementById('password').value;
+    // 在这里加入判断用户名和密码的逻辑
+    if (username === 's' && password === 's') {
+        // 在这里发送数据到服务器并进行删除操作
+        alert('用户已删除：' + username);
+        dialog.remove();
+    } else {
+        alert('用户名或密码错误');
+    }
+};
+        }
+    </script>
+    <style type="text/css">
+        .dialog {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+    </style>
 </head>
 <body style="background-color: gainsboro;">
     <!-- <h1>Debug Output</h1>
     <p>Data: {{ data }}</p>
     <p>Rows: {% for row in data %}{{ row }}{% endfor %}</p> -->
-
     <h1 style=" text-align: center;">用户管理</h1>
+    <button id="add-btn"  onclick="location.href='/register'">加用户</button>
+    <button id="edit-btn" onclick="location.href='/change_password'">改用户信息</button>
+    <button id="delete-btn"onclick="showDialog()" >删用户</button>
+    <br>
+    <br>
+    <form method="get" action="{{ url_for('show') }}">
+        <input type="text" name="query" placeholder="输入你要查找的用户名">
+        <input type="submit" value="查找">
+    </form>
+
     <!-- background: #d0d9ef; color: rgb(124, 187, 208);background: #d0d9ef;-->
-    <table border="" id="data-container"  ">
+    <table border="1" id="data-container">
         <!-- 直接color是字体颜色 style="border-color: ;-->
         <tr>
             <th>ID</th>
@@ -28,6 +182,26 @@
             <td>{{ row.password }}</td>
         </tr>
         {% endfor %}
+        {% if total_pages > 1 %}
+        <div class="pagination">
+            {% if page > 1 %}
+            <a href="{{ url_for('show', page=page-1) }}">上一页</a>
+            {% endif %}
+            {% for p in range(1, total_pages + 1) %}
+            {% if p == page %}
+            <a class="active" href="?page={{ p }}">{{ p }}</a>
+            {% else %}
+            <a href="{{ url_for('show', page=p) }}">{{ p }}</a>
+            {% endif %}
+            {% endfor %}
+            {% if page < total_pages %} <a href="{{ url_for('show', page=page+1) }}">下一页</a>
+                {% endif %}
+        </div>
+        {% endif %}
+        Total Pages: {{ total_pages }}
+        Current Page: {{ page }}
+        Start: {{ start }}
+        End: {{ end }}
     </table>
 </body>
 </html>
